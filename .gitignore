@@ -1,0 +1,6 @@
+out/
+build/
+tmp/
+.vs/
+.vscode/
+.~*
