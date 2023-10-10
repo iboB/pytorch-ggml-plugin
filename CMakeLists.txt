@@ -23,7 +23,9 @@ find_package(Torch REQUIRED)
 #################
 # subdirs/targets
 
-if(CUDAToolkit_FOUND)
+# check for the only var which is defined on all platforms if torch cuda is 
+# available
+if(TORCH_CUDA_LIBRARIES)
     # cuda toolit was found by pytorch
     # enable it in ggml
     set(GGML_CUBLAS ON CACHE BOOL "" FORCE)
