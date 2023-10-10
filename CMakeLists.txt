@@ -17,16 +17,22 @@ set(CMAKE_LINK_DEPENDS_NO_SHARED ON)
 
 set(CMAKE_CUDA_ARCHITECTURES 52) # 89
 
-# This is a dangerous option if one has a cuda version installed which is
-# different from the pytorch version.
-# Normally, find_package(Torch) will also find cuda and enable it as a language
-# However ggml will not link...
-option(ENABLE_CUDA "Enable Cuda (May be dangerous. Check comments)" OFF)
-
 # will enable cuda language and find cuda if available
 find_package(Torch REQUIRED)
 
 #################
 # subdirs/targets
+
+if(CUDAToolkit_FOUND)
+    # cuda toolit was found by pytorch
+    # enable it in ggml
+    set(GGML_CUBLAS ON CACHE BOOL "" FORCE)
+    add_compile_definitions(GGML_USE_CUBLAS)
+endif()
+
+set(GGML_PLUGIN ON)
 add_subdirectory(ggml)
-add_subdirectory(scratch)
+
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+    add_subdirectory(scratch)
+endif()
