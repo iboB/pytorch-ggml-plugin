@@ -23,7 +23,7 @@ find_package(Torch REQUIRED)
 #################
 # subdirs/targets
 
-# check for the only var which is defined on all platforms if torch cuda is 
+# check for the only var which is defined on all platforms if torch cuda is
 # available
 if(TORCH_CUDA_LIBRARIES)
     # cuda toolit was found by pytorch
@@ -38,3 +38,5 @@ add_subdirectory(ggml)
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
     add_subdirectory(scratch)
 endif()
+
+add_subdirectory(pytorch-plugin)
