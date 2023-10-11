@@ -9,6 +9,8 @@ Note that it relies on ggml features which are not in the main repo (yet). Most 
 
 These changes are required to use the ggml cuda backend and the data pointers from torch cuda tensors directly. Using the ggml cpu backend or copying the actual data between ggml and torch tensors will work with vanilla ggml.
 
+[This is the PR](https://github.com/ggerganov/ggml/pull/570) which tracks the proposed changes from this repo.
+
 ## License
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
