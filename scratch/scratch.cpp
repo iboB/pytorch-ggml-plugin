@@ -115,11 +115,11 @@ int main() {
     cudaMemcpyAsync(cu_input, input.data(), data_size(input), cudaMemcpyHostToDevice, cudaStream);
     model.compute(cu_input);
 
-    cudaMemcpyAsync(output.data(), cu_output, data_size(output), cudaMemcpyDeviceToHost, cudaStream);
+    // cudaMemcpyAsync(output.data(), cu_output, data_size(output), cudaMemcpyDeviceToHost, cudaStream);
+    // cudaStreamSynchronize(cudaStream);
+    ggml_backend_tensor_get(model.tensors.output, output.data(), 0, data_size(output));
 
     ggml_backend_free(backend);
-
-    cudaStreamSynchronize(cudaStream);
 #endif
 
     for (auto o : output) {
