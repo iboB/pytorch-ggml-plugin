@@ -82,7 +82,7 @@ int main() {
         input.push_back(float(i) / 10);
     }
 
-#if 0
+#if !GGML_USE_CUBLAS
     auto backend = ggml_backend_cpu_init();
     Model model(backend, weights.size(), GGML_TYPE_F32, weights.data(), output.data());
 

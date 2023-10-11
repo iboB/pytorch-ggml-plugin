@@ -1,4 +1,5 @@
 #include <ggml.h>
+#include <ggml-backend.h>
 
 #include <torch/custom_class.h>
 #include <torch/script.h>
