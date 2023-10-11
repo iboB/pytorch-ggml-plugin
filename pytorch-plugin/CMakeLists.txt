@@ -1,3 +1,6 @@
+# Copyright (c) Borislav Stanimirov
+# SPDX-License-Identifier: MIT
+#
 add_library(pytorch-plugin MODULE
     pytorch-plugin.cpp
 )
