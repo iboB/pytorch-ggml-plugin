@@ -42,4 +42,8 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
     add_subdirectory(scratch)
 endif()
 
+add_subdirectory(model)
 add_subdirectory(pytorch-plugin)
+
+add_executable(cpp-example cpp-example.cpp)
+target_link_libraries(cpp-example PRIVATE model)

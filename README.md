@@ -11,6 +11,13 @@ These changes are required to use the ggml cuda backend and the data pointers fr
 
 [This is the PR](https://github.com/ggerganov/ggml/pull/570) which tracks the proposed changes from this repo.
 
+## Structure
+
+* `model/` - a static library which has a (trivial) ggml model
+* `pytorch-plugin/` - a PyTorch plugin which exposes the module to a PyTorch app
+* `pytorch-example.py` - an example of funning the model from the plugin
+* `cpp-example.cpp` - an example of running the model as a standalone C++ executable using the static library
+
 ## License
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)

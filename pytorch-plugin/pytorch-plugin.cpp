@@ -1,6 +1,8 @@
 // Copyright (c) Borislav Stanimirov
 // SPDX-License-Identifier: MIT
 //
+#include <model/Model.hpp>
+
 #include <ggml.h>
 #include <ggml-backend.h>
 
@@ -13,60 +15,6 @@
 #include <ATen/cuda/CUDAContext.h>
 #endif
 
-#include <cstdint>
-
-struct Model {
-    struct Tensors {
-        ggml_tensor* input = nullptr;
-        ggml_tensor* weights = nullptr;
-        ggml_tensor* output = nullptr;
-    } tensors;
-
-    ggml_cgraph* graph = nullptr;
-
-    ggml_backend_t backend = nullptr;
-
-    ggml_context* ctx = nullptr;
-
-    const int64_t size;
-    const ggml_type type;
-
-    Model(ggml_backend_t be, int64_t s, ggml_type t, void* weights)
-        : backend(be)
-        , size(s)
-        , type(t)
-    {
-        assert(weights);
-        static constexpr int64_t num_tensors = sizeof(Tensors) / sizeof(ggml_tensor*);
-        struct ggml_init_params init_params {
-            /*.mem_size   =*/ ggml_tensor_overhead()* num_tensors + ggml_graph_overhead(),
-                /*.mem_buffer =*/ nullptr,
-                /*.no_alloc   =*/ true,
-        };
-        ctx = ggml_init(init_params);
-
-        tensors.input = ggml_new_tensor_1d(ctx, type, size);
-        tensors.weights = ggml_new_tensor_1d(ctx, type, size);
-        ggml_backend_set_tensor_external_data(backend, tensors.weights, weights);
-
-        tensors.output = ggml_add(ctx, tensors.input, tensors.weights);
-
-        graph = ggml_new_graph(ctx);
-        ggml_build_forward_expand(graph, tensors.output);
-    }
-
-    ~Model() {
-        ggml_free(ctx);
-    }
-
-    void compute(void* output, void* input) {
-        assert(input);
-        assert(output);
-        ggml_backend_set_tensor_external_data(backend, tensors.output, output);
-        ggml_backend_set_tensor_external_data(backend, tensors.input, input);
-        ggml_backend_graph_compute(backend, graph);
-    }
-};
 
 ggml_type torchTypeToGGML(torch::ScalarType t) {
     switch (t) {
