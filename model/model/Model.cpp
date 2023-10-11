@@ -24,7 +24,7 @@ Model::Model(ggml_backend_t be, int64_t s, ggml_type t, void* weights)
 
     tensors.input = ggml_new_tensor_1d(ctx, type, size);
     tensors.weights = ggml_new_tensor_1d(ctx, type, size);
-    ggml_backend_set_tensor_external_data(backend, tensors.weights, weights);
+    ggml_backend_set_tensor_external_data(backend, tensors.weights, weights, 0);
 
     tensors.output = ggml_add(ctx, tensors.input, tensors.weights);
 
@@ -39,7 +39,7 @@ Model::~Model() {
 void Model::compute(void* output, void* input) {
     assert(input);
     assert(output);
-    ggml_backend_set_tensor_external_data(backend, tensors.output, output);
-    ggml_backend_set_tensor_external_data(backend, tensors.input, input);
+    ggml_backend_set_tensor_external_data(backend, tensors.output, output, 0);
+    ggml_backend_set_tensor_external_data(backend, tensors.input, input, 0);
     ggml_backend_graph_compute(backend, graph);
 }

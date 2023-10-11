@@ -49,10 +49,10 @@ struct Model {
 
         tensors.input = ggml_new_tensor_1d(ctx, type, size);
         tensors.weights = ggml_new_tensor_1d(ctx, type, size);
-        ggml_backend_set_tensor_external_data(backend, tensors.weights, weights);
+        ggml_backend_set_tensor_external_data(backend, tensors.weights, weights, 0);
 
         tensors.output = ggml_add(ctx, tensors.input, tensors.weights);
-        ggml_backend_set_tensor_external_data(backend, tensors.output, output);
+        ggml_backend_set_tensor_external_data(backend, tensors.output, output, 0);
 
         graph = ggml_new_graph(ctx);
         ggml_build_forward_expand(graph, tensors.output);
@@ -63,7 +63,7 @@ struct Model {
     }
 
     void compute(void* input) {
-        ggml_backend_set_tensor_external_data(backend, tensors.input, input);
+        ggml_backend_set_tensor_external_data(backend, tensors.input, input, 0);
         ggml_backend_graph_compute(backend, graph);
     }
 };
