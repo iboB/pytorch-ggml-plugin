@@ -3,7 +3,6 @@
 //
 #include <model/Model.hpp>
 
-#include <ggml.h>
 #include <ggml-backend.h>
 
 #include <torch/custom_class.h>
@@ -14,7 +13,6 @@
 #include <ggml-cuda.h>
 #include <ATen/cuda/CUDAContext.h>
 #endif
-
 
 ggml_type torchTypeToGGML(torch::ScalarType t) {
     switch (t) {

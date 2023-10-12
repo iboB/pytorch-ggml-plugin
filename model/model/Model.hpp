@@ -2,12 +2,10 @@
 // SPDX-License-Identifier: MIT
 //
 #pragma once
+#include <ggml.h>
 #include <cstdint>
 
-struct ggml_context;
-struct ggml_tensor;
 typedef struct ggml_backend* ggml_backend_t;
-enum ggml_type;
 struct ggml_backend_buffer;
 struct ggml_allocr;
 
